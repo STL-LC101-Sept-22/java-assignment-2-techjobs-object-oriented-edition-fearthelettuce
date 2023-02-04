@@ -45,7 +45,14 @@ public class Job {
         Job theJob = (Job) toBeCompared;
         return theJob.id == id;
     }
-
+    @Override
+    public String toString(){
+        StringBuilder outputString = new StringBuilder();
+        outputString.append(System.lineSeparator());
+        outputString.append(getName());
+        outputString.append(System.lineSeparator());
+        return outputString.toString();
+    }
     @Override
     public int hashCode() {
         return Objects.hash(id);

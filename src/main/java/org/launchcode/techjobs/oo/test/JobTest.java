@@ -57,4 +57,13 @@ public class JobTest {
         Job testJob2 = new Job(testName, testEmployer, testLocation, testPositionType, testCoreCompetency);
         Assert.assertFalse(testJob1.equals(testJob2));
     }
+
+    @Test
+    public void testToStringStartsAndEndsWithNewLine() {
+        Job testJob = new Job(testName, testEmployer, testLocation, testPositionType, testCoreCompetency);
+        String testJobStringOutput = testJob.toString();
+
+        Assert.assertEquals("toString adds a blank line as the first character", testJobStringOutput.charAt(0), "\n");
+        Assert.assertEquals("toString adds a blank line as the last character",testJobStringOutput.charAt(testJobStringOutput.length() -1), "\n");
+    }
 }
