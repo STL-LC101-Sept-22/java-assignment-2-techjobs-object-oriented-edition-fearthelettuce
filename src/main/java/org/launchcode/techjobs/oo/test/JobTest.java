@@ -14,37 +14,47 @@ import static org.junit.Assert.*;
  */
 @RunWith(JUnit4.class)
 public class JobTest {
-//    @Before
-//    public void setTestData(){
-//
-//
-//        Job testJob2 = new Job("Launch Code Super Coder", testEmployer, testLocation, testPositionType, testCoreCompetency);
-//    }
+    String testName;
+    Employer testEmployer;
+    Location testLocation;
+    PositionType testPositionType;
+    CoreCompetency testCoreCompetency;
+    Job testJob;
+    @Before
+    public void setTestData(){
+        testName = "Product Tester";
+        testEmployer = new Employer("ACME");
+        testLocation = new Location("Desert");
+        testPositionType = new PositionType("Quality Control");
+        testCoreCompetency = new CoreCompetency("Persistence");
+
+    }
+    @Test
+    public void testSettingJobId() {
+        Job testJob1 = new Job();
+        Job testJob2 = new Job();
+        String nameSpec = "constructor sets id";
+        Assert.assertNotEquals(nameSpec, testJob1.getId(), testJob2.getId());
+    }
     @Test
     public void testJobConstructorSetsAllFields() {
-        String testName = "Launch Code Super Coder";
-        Employer testEmployer = new Employer("Launch Code Co.");
-        Location testLocation = new Location("Somewhere in a galaxy far far away");
-        PositionType testPositionType = new PositionType("Super Duper Coder");
-        CoreCompetency testCoreCompetency = new CoreCompetency("Super Coder Skillz");
+        Job testJob = new Job(testName, testEmployer, testLocation, testPositionType, testCoreCompetency);
+        Assert.assertTrue( testJob.getName() instanceof String);
+        Assert.assertEquals( testName, testJob.getName());
+        Assert.assertTrue( testJob.getEmployer() instanceof Employer);
+        Assert.assertEquals( testEmployer, testJob.getEmployer());
+        Assert.assertTrue( testJob.getLocation() instanceof Location);
+        Assert.assertEquals(testEmployer, testJob.getEmployer());
+        Assert.assertTrue( testJob.getPositionType() instanceof PositionType);
+        Assert.assertEquals(testEmployer, testJob.getEmployer());
+        Assert.assertTrue( testJob.getCoreCompetency() instanceof CoreCompetency);
+        Assert.assertEquals( testEmployer, testJob.getEmployer());
+    }
+
+    @Test
+    public void testJobsForEquality() {
         Job testJob1 = new Job(testName, testEmployer, testLocation, testPositionType, testCoreCompetency);
-
-        String nameSpec = "constructor sets name field";
-        Assert.assertTrue(nameSpec, testName == testJob1.getName());
-        //Assert.assertEquals(testName, testJob1.getName());
-        String employerSpec = "constructor sets employer";
-        Assert.assertTrue(employerSpec, testJob1.getEmployer() == testEmployer);
-//        Assert.assertEquals(testJob1.getEmployer().getValue(), testEmployer.getValue());
-//        Assert.assertEquals(testJob1.getEmployer().getValue(), testEmployer.getValue());
-//        Assert.assertEquals(testJob1.getEmployer().getValue(), testEmployer.getValue());
-//        Assert.assertEquals(testJob1.getEmployer().getValue(), testEmployer.getValue());
-        String locationSpec = "constructor sets location";
-        Assert.assertTrue(locationSpec, testJob1.getLocation() == testLocation);
-        String positionTypeSpec = "constructor sets position type";
-        Assert.assertTrue(positionTypeSpec, testJob1.getPositionType() == testPositionType);
-        String coreCompetencySpec = "constructor sets core competency";
-        Assert.assertTrue(coreCompetencySpec, testJob1.getCoreCompetency() == testCoreCompetency);
-
-
+        Job testJob2 = new Job(testName, testEmployer, testLocation, testPositionType, testCoreCompetency);
+        Assert.assertFalse(testJob1.equals(testJob2));
     }
 }
