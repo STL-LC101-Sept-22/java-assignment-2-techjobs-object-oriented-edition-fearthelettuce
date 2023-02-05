@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.launchcode.techjobs.oo.*;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 /**
@@ -67,31 +69,41 @@ public class JobTest {
     }
     @Test
     public void testToStringContainsCorrectLabelsAndData() {
+        testName = "Product Tester";
+        testEmployer = new Employer("ACME");
+        testLocation = new Location("Desert");
+        testPositionType = new PositionType("Quality Control");
+        testCoreCompetency = new CoreCompetency("Persistence");
         Job testJob = new Job(testName, testEmployer, testLocation, testPositionType, testCoreCompetency);
         String testJobStringOutput = testJob.toString();
-        Assert.assertEquals(testJobStringOutput,
+        String expectedString = String.format("" +
                 "\n" +
-                "ID: 1\n" +
-                "Name: Product Tester\n" +
-                "Employer: ACME\n" +
-                "Location: Desert\n" +
-                "Position Type: Quality Control\n" +
-                "Core Competency: Persistence\n"
-        );
+                "ID: %s\n" +
+                "Name: %s\n" +
+                "Employer: %s\n" +
+                "Location: %s\n" +
+                "Position Type: %s\n" +
+                "Core Competency: %s\n", testJob.getId(), testName, testEmployer.toString(), testLocation.toString(), testPositionType.toString(), testCoreCompetency.toString());
+        Assert.assertEquals(testJobStringOutput, expectedString);
     }
     @Test
     public void testToStringHandlesEmptyField(){
-        Employer testBlankEmployer = new Employer();
-        Job testJob = new Job(testName, null, new Location(""), testPositionType, testCoreCompetency);
-        String testJobStringOutput = testJob.toString();
-        Assert.assertEquals(
-                "\n" +
-                        "ID: 1\n" +
-                        "Name: Product Tester\n" +
-                        "Employer: Data not available\n" +
-                        "Location: Data not available\n" +
-                        "Position Type: Quality Control\n" +
-                        "Core Competency: Persistence\n",
-                testJobStringOutput);
+        String expectedString;
+        Job testJobBlank = new Job("", null, new Location(""), null, null);
+        String testJobStringOutput = testJobBlank.toString();
+        if(Objects.isNull(testJobBlank.getName()) && Objects.isNull(testJobBlank.getEmployer()) && Objects.isNull(testJobBlank.getLocation()) && Objects.isNull(testJobBlank.getPositionType()) && Objects.isNull(testJobBlank.getCoreCompetency())) {
+            expectedString = "\nOOPS! This job does not seem to exist.\n";
+        } else {
+            expectedString = String.format("" +
+                            "\n" +
+                            "ID: %s\n" +
+                            "Name: %s\n" +
+                            "Employer: %s\n" +
+                            "Location: %s\n" +
+                            "Position Type: %s\n" +
+                            "Core Competency: %s\n",
+                    testJobBlank.getId(), "Data not available", "Data not available", "Data not available", "Data not available", "Data not available");
+        }
+        Assert.assertEquals(expectedString, testJobStringOutput);
     }
 }
