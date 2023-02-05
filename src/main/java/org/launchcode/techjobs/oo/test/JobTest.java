@@ -62,8 +62,36 @@ public class JobTest {
     public void testToStringStartsAndEndsWithNewLine() {
         Job testJob = new Job(testName, testEmployer, testLocation, testPositionType, testCoreCompetency);
         String testJobStringOutput = testJob.toString();
-
-        Assert.assertEquals("toString adds a blank line as the first character", testJobStringOutput.charAt(0), "\n");
-        Assert.assertEquals("toString adds a blank line as the last character",testJobStringOutput.charAt(testJobStringOutput.length() -1), "\n");
+        Assert.assertEquals(testJobStringOutput.charAt(0), '\n');
+        Assert.assertEquals(testJobStringOutput.charAt(testJobStringOutput.length() -1), '\n');
+    }
+    @Test
+    public void testToStringContainsCorrectLabelsAndData() {
+        Job testJob = new Job(testName, testEmployer, testLocation, testPositionType, testCoreCompetency);
+        String testJobStringOutput = testJob.toString();
+        Assert.assertEquals(testJobStringOutput,
+                "\n" +
+                "ID: 1\n" +
+                "Name: Product Tester\n" +
+                "Employer: ACME\n" +
+                "Location: Desert\n" +
+                "Position Type: Quality Control\n" +
+                "Core Competency: Persistence\n"
+        );
+    }
+    @Test
+    public void testToStringHandlesEmptyField(){
+        Employer testBlankEmployer = new Employer();
+        Job testJob = new Job(testName, null, new Location(""), testPositionType, testCoreCompetency);
+        String testJobStringOutput = testJob.toString();
+        Assert.assertEquals(
+                "\n" +
+                        "ID: 1\n" +
+                        "Name: Product Tester\n" +
+                        "Employer: Data not available\n" +
+                        "Location: Data not available\n" +
+                        "Position Type: Quality Control\n" +
+                        "Core Competency: Persistence\n",
+                testJobStringOutput);
     }
 }

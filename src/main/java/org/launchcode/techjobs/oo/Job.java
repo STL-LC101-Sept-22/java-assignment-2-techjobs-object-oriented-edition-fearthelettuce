@@ -48,10 +48,25 @@ public class Job {
     @Override
     public String toString(){
         StringBuilder outputString = new StringBuilder();
-        outputString.append(System.lineSeparator());
-        outputString.append(getName());
-        outputString.append(System.lineSeparator());
+        outputString.append("\n");
+        if(Objects.isNull(getName()) && Objects.isNull(getEmployer()) && Objects.isNull(getLocation()) && Objects.isNull(getPositionType()) && Objects.isNull(getCoreCompetency())) {
+            outputString.append("OOPS! This job does not seem to exist.\n");
+            return outputString.toString();
+        }
+        Integer idInt = getId();
+        outputString.append(printFormattedLine("ID", idInt));
+        outputString.append(printFormattedLine("Name", getName()));
+        outputString.append(printFormattedLine("Employer",getEmployer()));
+        outputString.append(printFormattedLine("Location", getLocation()));
+        outputString.append(printFormattedLine("Position Type", getPositionType()));
+        outputString.append(printFormattedLine("Core Competency",getCoreCompetency()));
         return outputString.toString();
+    }
+    public String printFormattedLine(String label, Object obj) {
+        if(Objects.isNull(obj) || obj.toString() == "") {
+            return label + ": Data not available\n";
+        }
+        return label +": " + obj.toString() + "\n";
     }
     @Override
     public int hashCode() {
