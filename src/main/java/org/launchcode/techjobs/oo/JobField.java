@@ -38,7 +38,6 @@ public abstract class JobField {
     }
 
     // Getters and Setters:
-
     public int getId() {
         return id;
     }
